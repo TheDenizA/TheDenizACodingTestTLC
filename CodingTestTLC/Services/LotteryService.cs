@@ -9,7 +9,8 @@ public class LotteryService(IPurchaseRepo purchaseRepo, IThirdPartyService third
     private readonly IPurchaseRepo _purchaseRepo = purchaseRepo;
     private readonly IThirdPartyService _thirdPartyService = thirdPartyService;
 
-    public async Task<decimal> PurchaseLotteryTicket(LotteryRequestModel request)
+    // Just returing request for visability during this code test
+    public async Task<LotteryRequestModel> PurchaseLotteryTicket(LotteryRequestModel request)
     {
         await _purchaseRepo.Create(request);
 
@@ -18,7 +19,7 @@ public class LotteryService(IPurchaseRepo purchaseRepo, IThirdPartyService third
 
         await _purchaseRepo.Update(request);
 
-        return lotteryResponse.Total;
+        return request;
     }
 }
 
