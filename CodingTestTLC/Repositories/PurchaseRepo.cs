@@ -7,31 +7,39 @@ namespace CodingTestTLC.Repositories;
 public class PurchaseRepo : IPurchaseRepo
 {
     // Mock list
-    private readonly ConcurrentDictionary<Guid, LotteryRequestModel> _purchaseRequests;
+    private readonly ConcurrentDictionary<long, LotteryRequestModel> _purchaseRequests;
 
     public PurchaseRepo()
     {
-        _purchaseRequests = new ConcurrentDictionary<Guid, LotteryRequestModel>();
+        _purchaseRequests = new ConcurrentDictionary<long, LotteryRequestModel>();
     }
 
     public Task Create(LotteryRequestModel request)
     {
-        if(!_purchaseRequests.TryAdd(request.UniquePurchaseID, request))
-        {
-            throw new DuplicateLotteryRequestException();
-        }
+        // This would come from the database as the PK
+        // The database would take care of it being unique when being saved
+        var id = !_purchaseRequests.Any() ? 1 : _purchaseRequests.Keys.Max() + 1;
+        request.AdduniquePurchaseId(id);
+
+        // In this mock case as the db would add it and create a new ID, it would always work.
+        _purchaseRequests.TryAdd(id, request);
         
         return Task.CompletedTask;
     }
 
     public Task Update(LotteryRequestModel request)
     {
-        if(!_purchaseRequests.TryGetValue(request.UniquePurchaseID, out var existingRequest))
+        // This would be be one call in a db, just the nature of the mock doing a concurrentDictionary
+        // Makes be do 2 calls to get the original data so I can update it
+
+        // Mocks data doesn't exist in a db
+        if(!_purchaseRequests.TryGetValue(request.UniquePurchaseId, out var existingRequest))
         {
             throw new NotFoundLotteryRequestException();
         }
 
-        if (!_purchaseRequests.TryUpdate(request.UniquePurchaseID, request, existingRequest))
+        // Mocks data can't be updated in a db
+        if (!_purchaseRequests.TryUpdate(request.UniquePurchaseId, request, existingRequest))
         {
             throw new CouldNotUpdateLotteryRequestException();
         }

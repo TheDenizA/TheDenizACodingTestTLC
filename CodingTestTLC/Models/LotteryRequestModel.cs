@@ -4,7 +4,7 @@ namespace CodingTestTLC.Models;
 
 public class LotteryRequestModel
 {
-    public Guid UniquePurchaseID { get; private set; }
+    public long UniquePurchaseId { get; private set; }
 
     [Required]
     public string CustomerId { get; private set; }
@@ -21,11 +21,15 @@ public class LotteryRequestModel
 
     public LotteryRequestModel(string customerId, string drawId, int numberOfTickets)
     {
-        UniquePurchaseID = Guid.NewGuid();
         CustomerId = customerId;
         DrawId = drawId;
         NumberOfTickets = numberOfTickets;
         Timestamp = DateTime.UtcNow;
+    }
+
+    public void AdduniquePurchaseId(long id)
+    {
+        UniquePurchaseId = id;
     }
 
     public void ConfirmPurchase(decimal total)
