@@ -4,7 +4,7 @@ namespace CodingTestTLC.Repositories;
 
 public interface IPurchaseRepo
 {
-    Task Create(LotteryRequestModel request);
-    Task Update(LotteryRequestModel request);
+    Task CreateAsync(LotteryRequestModel request);
+    Task UpdateAsync(LotteryRequestModel request);
 }
 

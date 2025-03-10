@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<LotteryService>();
 builder.Services.AddSingleton<IThirdPartyService, ThirdPartyService>();
+builder.Services.AddSingleton<IDatabase, Database>();
 builder.Services.AddSingleton<IPurchaseRepo, PurchaseRepo>();
 
 builder.Services.AddControllers();

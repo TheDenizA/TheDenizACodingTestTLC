@@ -12,5 +12,5 @@ public class LotteryController(LotteryService lotteryService) : ControllerBase
 
     [HttpPost]
     public async Task<LotteryRequestModel> Purchase(LotteryRequestModel request) => 
-        await _lotteryService.PurchaseLotteryTicket(request);
+        await _lotteryService.PurchaseLotteryTicketAsync(request);
 }

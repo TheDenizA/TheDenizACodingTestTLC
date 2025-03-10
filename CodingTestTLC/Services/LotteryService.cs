@@ -9,17 +9,17 @@ public class LotteryService(IPurchaseRepo purchaseRepo, IThirdPartyService third
     private readonly IPurchaseRepo _purchaseRepo = purchaseRepo;
     private readonly IThirdPartyService _thirdPartyService = thirdPartyService;
     
-    public async Task<LotteryRequestModel> PurchaseLotteryTicket(LotteryRequestModel request)
+    public async Task<LotteryRequestModel> PurchaseLotteryTicketAsync(LotteryRequestModel request)
     {
         // Create the request, with a unique ID, this saves request data and gives us a record of the request
-        await _purchaseRepo.Create(request);
+        await _purchaseRepo.CreateAsync(request);
 
         // Purchase from third party
-        var lotteryResponse = await _thirdPartyService.RequestPurchase(request);
+        var lotteryResponse = await _thirdPartyService.RequestPurchaseAsync(request);
         request.ConfirmPurchase(lotteryResponse.Total);
 
         // Update the data with the purchase
-        await _purchaseRepo.Update(request);
+        await _purchaseRepo.UpdateAsync(request);
 
         // Just returing request for visability during this code test
         return request;
