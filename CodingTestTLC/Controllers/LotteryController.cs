@@ -1,25 +1,20 @@
 using CodingTestTLC.Models;
+using CodingTestTLC.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodingTestTLC.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-public class LotteryController : ControllerBase
+[Route("api/[controller]/[action]")]
+public class LotteryController(LotteryService lotteryService) : ControllerBase
 {
-    private readonly ILogger<LotteryController> _logger;
+    private readonly LotteryService _lotteryService = lotteryService;
 
-    public LotteryController(ILogger<LotteryController> logger)
-    {
-        _logger = logger;
-    }
+    [HttpPost]
+    public async Task<LotteryResponseModel> Purchase(LotteryRequestModel request)
+    {        
+        var purchaseResult = await _lotteryService.PurchaseLotteryTicket(request);
 
-    [HttpGet(Name = "RequestLotteryTicket")]
-    public LotteryRequestModel Get()
-    {
-        return new LotteryRequestModel
-        {
-
-        };
+        return new LotteryResponseModel(purchaseResult);            
     }
 }

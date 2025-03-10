@@ -1,6 +1,13 @@
+using CodingTestTLC.Partners;
+using CodingTestTLC.Repositories;
+using CodingTestTLC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<LotteryService>();
+builder.Services.AddSingleton<IThirdPartyService, ThirdPartyService>();
+builder.Services.AddSingleton<IPurchaseRepo, PurchaseRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
