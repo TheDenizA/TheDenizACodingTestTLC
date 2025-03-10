@@ -6,6 +6,8 @@ namespace CodingTestTLC.Repositories;
 
 public class PurchaseRepo : IPurchaseRepo
 {
+    // This is already mocked and won't need any further mocking during a test
+
     // Mock list
     private readonly ConcurrentDictionary<long, LotteryRequestModel> _purchaseRequests;
 
@@ -13,6 +15,11 @@ public class PurchaseRepo : IPurchaseRepo
     {
         _purchaseRequests = new ConcurrentDictionary<long, LotteryRequestModel>();
     }
+
+    // This is a used during testing.
+    // I am aware that having testing code mixed in with real code is a big no no, but considering all this is is a mock
+    // It makes more sense then to recreate the extact same mock for testing
+    public List<LotteryRequestModel> GetPurchaseRequests() => _purchaseRequests.Values.ToList();
 
     public Task Create(LotteryRequestModel request)
     {
