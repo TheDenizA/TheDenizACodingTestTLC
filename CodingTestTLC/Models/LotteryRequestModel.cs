@@ -27,7 +27,7 @@ public class LotteryRequestModel
         Timestamp = DateTime.UtcNow;
     }
 
-    public void AdduniquePurchaseId(long id)
+    public void AddUniquePurchaseId(long id)
     {
         UniquePurchaseId = id;
     }

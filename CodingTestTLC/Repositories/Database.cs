@@ -14,14 +14,14 @@ namespace CodingTestTLC.Repositories
             _purchaseRequests = new ConcurrentDictionary<long, LotteryRequestModel>();
         }
 
-        public List<LotteryRequestModel> GetPurchaseRequests() => _purchaseRequests.Values.ToList();
+        public Task<List<LotteryRequestModel>> GetPurchaseRequestsAsync() => Task.FromResult(_purchaseRequests.Values.ToList());
 
         public Task CreateAsync(LotteryRequestModel request)
         {
             // This would come from the database as the PK
             // The database would take care of it being unique when being saved
             var id = !_purchaseRequests.Any() ? 1 : _purchaseRequests.Keys.Max() + 1;
-            request.AdduniquePurchaseId(id);
+            request.AddUniquePurchaseId(id);
 
             // In this mock case as the db would add it and create a new ID, it would always work.
             _purchaseRequests.TryAdd(id, request);

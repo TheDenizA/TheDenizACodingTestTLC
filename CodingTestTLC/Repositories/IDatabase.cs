@@ -4,7 +4,7 @@ namespace CodingTestTLC.Repositories
 {
     public interface IDatabase
     {
-        List<LotteryRequestModel> GetPurchaseRequests();
+        Task<List<LotteryRequestModel>> GetPurchaseRequestsAsync();
         Task CreateAsync(LotteryRequestModel request);
         Task UpdateAsync(LotteryRequestModel request);
     }
